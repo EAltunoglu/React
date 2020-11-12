@@ -40,7 +40,7 @@ class Fav extends Component {
       classes,
       fav: {
         body,
-        postedOn,
+        createdAt,
         userImage,
         username,
         favId,
@@ -75,7 +75,7 @@ class Fav extends Component {
           </Typography>
           {deleteButton}
           <Typography variant="body2" color="textSecondary">
-            {dayjs(postedOn).fromNow()}
+            {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">{body}</Typography>
           <LikeButton favId={favId} />
