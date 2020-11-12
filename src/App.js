@@ -20,6 +20,7 @@ import AuthRoute from './util/AuthRoute';
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
+import user from './pages/user';
 
 const theme = createMuiTheme({
   palette:{
@@ -44,7 +45,7 @@ const theme = createMuiTheme({
   }
 });
 
- axios.defaults.baseURL = "https://us-central1-favfay-ec70a.cloudfunctions.net/api";
+axios.defaults.baseURL = "https://us-central1-favfay-ec70a.cloudfunctions.net/api";
 // axios.defaults.baseURL = "http://localhost:5000/favfay-ec70a/us-central1/api";
 
 const token = localStorage.FavIdToken;
@@ -73,6 +74,12 @@ class App extends Component {
                 <Route path="/home" component={home}/>
                 <AuthRoute path="/login" component={login}/>
                 <AuthRoute path="/signup" component={signup}/>
+                <Route exact path="/users/:username" component={user} />
+                <Route
+                  exact
+                  path="/users/:username/fav/:favId"
+                  component={user}
+                />
               </Switch>
             </div>
           </Router>

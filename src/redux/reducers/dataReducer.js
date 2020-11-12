@@ -7,7 +7,6 @@ import {
     POST_FAV,
     SET_FAV,
     SUBMIT_COMMENT,
-    SEARCH_USERS
 } from '../types';
 
 const initialState = {

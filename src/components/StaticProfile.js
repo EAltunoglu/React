@@ -15,7 +15,7 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 const StaticProfile = (props) => {
   const {
     classes,
-    profile: { handle, createdAt, imageUrl, bio, website, location }
+    profile: { username, createdAt, imageUrl, bio, website, location }
   } = props;
 
   return (
@@ -28,11 +28,11 @@ const StaticProfile = (props) => {
         <div className="profile-details">
           <MuiLink
             component={Link}
-            to={`/users/${handle}`}
+            to={`/users/${username}`}
             color="primary"
             variant="h5"
           >
-            @{handle}
+            @{username}
           </MuiLink>
           <hr />
           {bio && <Typography variant="body2">{bio}</Typography>}
@@ -66,4 +66,4 @@ StaticProfile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(StaticProfile);
+export default StaticProfile;
