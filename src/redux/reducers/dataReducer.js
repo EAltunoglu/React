@@ -6,10 +6,12 @@ import {
     DELETE_FAV,
     POST_FAV,
     SET_FAV,
-    SUBMIT_COMMENT
+    SUBMIT_COMMENT,
+    SEARCH_USERS
 } from '../types';
 
 const initialState = {
+    users: [],
     favs: [],
     fav: {},
     loading: false
@@ -62,11 +64,16 @@ switch (action.type) {
         return {
             ...state,
             fav: {
-            ...state.fav,
-            comments: [action.payload, ...state.fav.comments]
+                ...state.fav,
+                comments: [action.payload, ...state.fav.comments]
             }
         };
+    /*case SEARCH_USERS:
+        return {
+            ...state,
+            users: action.payload
+        };*/
     default:
-    return state;
+        return state;
 }
 }

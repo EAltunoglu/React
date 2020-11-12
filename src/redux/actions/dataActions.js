@@ -86,15 +86,15 @@ export const likeFav = (favId) => (dispatch) => {
 };
 // Unlike a fav
 export const unlikeFav = (favId) => (dispatch) => {
-  console.log("ASDSADSASD");
-  console.log(favId);
+  //console.log("ASDSADSASD");
+  //console.log(favId);
   axios
     .get(`/fav/${favId}/unlike`)
     .then((res) => {
-      console.log("GAGA");
-      console.log(res);
-      console.log("EEEE");
-      console.log(res.data);
+      //console.log("GAGA");
+      //console.log(res);
+      //console.log("EEEE");
+      //console.log(res.data);
       dispatch({
         type: UNLIKE_FAV,
         payload: res.data

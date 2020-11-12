@@ -11,6 +11,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 // Icons
 import HomeIcon from '@material-ui/icons/Home';
+import SearchUser from './SearchUser';
+
 
 const theme = {
   appbar: {
@@ -26,6 +28,7 @@ class Navbar extends Component {
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
+              <SearchUser></SearchUser>
               <PostFav />
               <Link to="/">
                 <MyButton tip="Home">

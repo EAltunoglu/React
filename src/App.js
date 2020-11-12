@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import {SET_AUTHENTICATED} from './redux/types';
 import {logoutUser, getUserData} from './redux/actions/userActions';
+// import {} from './redux/'
 
 // Components
 import Navbar from './components/Navbar';

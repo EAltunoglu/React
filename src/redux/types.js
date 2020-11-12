@@ -10,6 +10,7 @@ export const LOADING_UI = 'LOADING_UI';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const LOADING_DATA = 'LOADING_DATA';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
+export const CHANGE_THEME = 'CHANGE_THEME';
 // Data reducer types
 export const SET_FAVS = 'SET_FAVS';
 export const SET_FAV = 'SET_FAV';
@@ -18,3 +19,4 @@ export const UNLIKE_FAV = 'UNLIKE_FAV';
 export const DELETE_FAV = 'DELETE_FAV';
 export const POST_FAV = 'POST_FAV';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
+export const SEARCH_USERS = 'SEARCH_USERS';

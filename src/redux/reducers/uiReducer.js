@@ -2,10 +2,12 @@ import {
     SET_ERRORS,
     CLEAR_ERRORS,
     LOADING_UI,
-    STOP_LOADING_UI
+    STOP_LOADING_UI,
+    CHANGE_THEME
   } from '../types';
   
   const initialState = {
+    isDarkMode: false,
     loading: false,
     errors: null
   };
@@ -34,6 +36,12 @@ import {
           ...state,
           loading: false
         };
+      case CHANGE_THEME:
+        return{
+          ...state,
+          isDarkMode: !state.isDarkMode
+          // loading
+        }
       default:
         return state;
     }
