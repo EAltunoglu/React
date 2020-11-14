@@ -165,7 +165,7 @@ FavDialog.propTypes = {
   favId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   fav: PropTypes.object.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,9 +1,7 @@
 import React from 'react';
-//import '../Search.css';
 import axios from 'axios';
-//import Loader from '../loader.gif';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-//import ReactBootstrapStyle from '@bit/react-bootstrap.react-bootstrap.internal.style-links';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 export default class SearchUser extends React.Component {
 
@@ -64,8 +62,7 @@ export default class SearchUser extends React.Component {
 
 	renderSearchResults = () => {
 		const { results } = this.state;
-        console.log("results:");
-        console.log(results)
+		/*
 		if ( results && Object.keys( results ).length && results.length ) {
 			return (
 				<ul className="results-container">
@@ -79,6 +76,19 @@ export default class SearchUser extends React.Component {
 
 				</ul>
 			)
+		}*/
+			if( results && Object.keys( results ).length && results.length ) {
+				return(
+				<div> {
+				results.map( result => {
+					return(
+						<Button variant="h5" component={Link} to={`/users/${result.username}`}>
+							{result.username}
+						</Button>
+					)
+				})}
+				</div>
+				)
 		}
 	};
 
@@ -92,7 +102,7 @@ export default class SearchUser extends React.Component {
                         name="query"
                         value={ query }
                         id="search-input"
-                        placeholder="Search..."
+                        placeholder="Search Username"
                         onChange={this.handleOnInputChange}
                     />
                     <i className="fa fa-search search-icon" aria-hidden="true"/>

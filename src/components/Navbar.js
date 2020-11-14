@@ -13,11 +13,7 @@ import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import SearchUser from './SearchUser';
 
-
 const theme = {
-  appbar: {
-    color: 'red',
-  },
 }
 
 class Navbar extends Component {
@@ -30,12 +26,15 @@ class Navbar extends Component {
             <Fragment>
               <SearchUser></SearchUser>
               <PostFav />
-              <Link to="/">
+              <Link to="/home">
                 <MyButton tip="Home">
                   <HomeIcon />
                 </MyButton>
               </Link>
               <Notifications />
+              <Link to="/subscriptions">
+                SUBSCRIPTIONS
+              </Link>
             </Fragment>
           ) : (
             <Fragment>

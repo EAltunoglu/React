@@ -5,7 +5,9 @@ import {
     LOADING_UI,
     SET_UNAUTHENTICATED,
     LOADING_USER,
-    MARK_NOTIFICATIONS_READ
+    MARK_NOTIFICATIONS_READ,
+    UNFOLLOW_USER,
+    FOLLOW_USER
 } from '../types';
 import axios from 'axios';
 
@@ -99,4 +101,33 @@ const setAuthorizationHeader = (token) => {
     const FavIdToken = `Bearer ${token}`;
     localStorage.setItem('FavIdToken', FavIdToken);
     axios.defaults.headers.common['Authorization'] = FavIdToken;
+};
+
+// Like a fav
+export const followUser = (username) => (dispatch) => {
+    console.log("follow user:");
+    console.log(username);
+    axios
+      .get(`/follow/${username}`)
+      .then((res) => {
+        dispatch({
+          type: FOLLOW_USER,
+          payload: res.data
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+  // Unlike a fav
+export const unfollowUser = (username) => (dispatch) => {
+    console.log("unfollowUSer:");
+    console.log(username);
+    axios
+    .get(`/unfollow/${username}`)
+    .then((res) => {
+    dispatch({
+        type: UNFOLLOW_USER,
+        payload: res.data
+    });
+    })
+    .catch((err) => console.log(err));
 };

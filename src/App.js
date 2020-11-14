@@ -21,6 +21,7 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
+import subscriptions from './pages/subscriptions';
 
 const theme = createMuiTheme({
   palette:{
@@ -79,6 +80,11 @@ class App extends Component {
                   exact
                   path="/users/:username/fav/:favId"
                   component={user}
+                />
+                <Route
+                  exact
+                  path="/subscriptions"
+                  component={subscriptions}
                 />
               </Switch>
             </div>

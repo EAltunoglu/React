@@ -7,34 +7,44 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // REdux
 import { connect } from 'react-redux';
-import { followUser, unfollowUser } from '../redux/actions/dataActions';
+import { followUser, unfollowUser } from '../redux/actions/userActions';
 
 export class FollowButton extends Component {
   followed = () => {
+    console.log("FOLLOWED");
+    console.log(this.props.user);
+    console.log(this.props.username);
     if (
-      this.props.user.likes &&
-      this.props.user.likes.find(
-        (like) => like.favId === this.props.favId
+      this.props.user.following &&
+      this.props.user.following.find(
+        (follow) => follow.username === this.props.username
       )
     )
       return true;
     else return false;
   };
-  likeFav = () => {
-    this.props.followUser(this.props.favId);
+  followUser = () => {
+    this.props.followUser(this.props.username);
   };
-  unlikeFav = () => {
-    this.props.unfollowUser(this.props.favId);
+  unfollowUser = () => {
+    this.props.unfollowUser(this.props.username);
   };
   render() {
+    console.log("FOLLOW BUTON:");
+    console.log("PROFILE USERNAME:");
+    console.log(this.props.username);
+    console.log("LOGGEDIN USER:");
+    console.log(this.props.user.credentials.username);
     const { authenticated } = this.props.user;
-    const likeButton = !authenticated ? (
+    const flag = this.followed();
+    console.log(flag);
+    const followButton = !authenticated ? (
       <Link to="/login">
-        <MyButton tip="Like">
+        <MyButton tip="Follow">
           <FavoriteBorder color="primary" />
         </MyButton>
       </Link>
-    ) : this.followed() ? (
+    ) : flag ? (
       <MyButton tip="Unfollow" onClick={this.unfollowUser}>
         <FavoriteIcon color="primary" />
       </MyButton>
@@ -43,14 +53,13 @@ export class FollowButton extends Component {
         <FavoriteBorder color="primary" />
       </MyButton>
     );
-    return likeButton;
+    return followButton;
   }
 }
 
 FollowButton.propTypes = {
   user: PropTypes.object.isRequired,
-  userId: PropTypes.string.isRequired,
-  //favId: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   followUser: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired
 };

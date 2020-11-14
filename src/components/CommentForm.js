@@ -39,7 +39,7 @@ class CommentForm extends Component {
   render() {
     const { classes, authenticated } = this.props;
     const errors = this.state.errors;
-
+    //console.log(this.props);
     const commentFormMarkup = authenticated ? (
       <Grid item sm={12} style={{ textAlign: 'center' }}>
         <form onSubmit={this.handleSubmit}>
@@ -75,10 +75,12 @@ CommentForm.propTypes = {
   UI: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   favId: PropTypes.string.isRequired,
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
+  favs: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({
+  favs: state.data.favs,
   UI: state.UI,
   authenticated: state.user.authenticated
 });

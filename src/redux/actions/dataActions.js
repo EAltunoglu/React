@@ -20,8 +20,6 @@ export const getFavs = () => (dispatch) => {
   axios
     .get('/favs')
     .then((res) => {
-      //console.log("BBB");
-      //console.log(res.data);
       dispatch({
         type: SET_FAVS,
         payload: res.data
@@ -68,15 +66,9 @@ export const postFav = (newFav) => (dispatch) => {
 };
 // Like a fav
 export const likeFav = (favId) => (dispatch) => {
-  //console.log("AGDDSADFADS");
-  //console.log(favId);
   axios
     .get(`/fav/${favId}/like`)
     .then((res) => {
-      //console.log("HAHAHAH");
-      //console.log(res);
-      //console.log("@22");
-      //console.log(res.data);
       dispatch({
         type: LIKE_FAV,
         payload: res.data
@@ -86,15 +78,9 @@ export const likeFav = (favId) => (dispatch) => {
 };
 // Unlike a fav
 export const unlikeFav = (favId) => (dispatch) => {
-  //console.log("ASDSADSASD");
-  //console.log(favId);
   axios
     .get(`/fav/${favId}/unlike`)
     .then((res) => {
-      //console.log("GAGA");
-      //console.log(res);
-      //console.log("EEEE");
-      //console.log(res.data);
       dispatch({
         type: UNLIKE_FAV,
         payload: res.data

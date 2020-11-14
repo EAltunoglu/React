@@ -12,12 +12,23 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
+import FollowButon from './FollowButton';
+
+const styles = {
+  paper: {
+    padding: 20
+  },
+  profile: {
+
+  },
+}
+
 const StaticProfile = (props) => {
   const {
     classes,
     profile: { username, createdAt, imageUrl, bio, website, location }
   } = props;
-
+  console.log("STATIC PROFILE");
   return (
     <Paper className={classes.paper}>
       <div className={classes.profile}>
@@ -55,6 +66,7 @@ const StaticProfile = (props) => {
           )}
           <CalendarToday color="primary" />{' '}
           <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
+          <FollowButon username={username}/>
         </div>
       </div>
     </Paper>
@@ -66,4 +78,4 @@ StaticProfile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default StaticProfile;
+export default withStyles(styles)(StaticProfile);

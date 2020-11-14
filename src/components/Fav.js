@@ -49,13 +49,16 @@ class Fav extends Component {
       },
       user: {
         authenticated,
-        credentials: { handle }
       }
     } = this.props;
     /// HANDDLE
+    //console.log(this.props);
+    //console.log(credentials);
+    //console.log()
     const deleteButton =
-      authenticated && username === handle ? (
-        <DeleteFav favId={favId} />
+      authenticated && username === this.props.user.credentials.username ? (
+        null
+        //<DeleteFav favId={favId} />
       ) : null;
     return (
       <Card className={classes.card}>

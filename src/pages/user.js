@@ -26,7 +26,7 @@ class user extends Component {
     axios
       .get(`/user/${username}`)
       .then((res) => {
-          console.log(res.data.user);
+        //  console.log(res.data.user);
         this.setState({
           profile: res.data.user
         });

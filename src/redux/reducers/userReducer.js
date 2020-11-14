@@ -5,7 +5,9 @@ import {
     LOADING_USER,
     LIKE_FAV,
     UNLIKE_FAV,
-    MARK_NOTIFICATIONS_READ
+    MARK_NOTIFICATIONS_READ,
+    FOLLOW_USER,
+    UNFOLLOW_USER
   } from '../types';
   
   const initialState = {
@@ -49,7 +51,6 @@ import {
           ]
         };
       case UNLIKE_FAV:
-        console.log("sad");
         return {
           ...state,
           likes: state.likes.filter(
@@ -60,6 +61,30 @@ import {
         state.notifications.forEach((not) => (not.read = true));
         return {
           ...state
+        };
+      case FOLLOW_USER:
+        console.log("STATE:");
+        console.log(state);
+        console.log("ACTION:");
+        console.log(action);
+        return {
+          ...state,
+          following: [
+            ...state.following,
+            {
+              username: action.payload.recipient,
+            }
+          ]
+        };
+      case UNFOLLOW_USER:
+        console.log("UNFOLLOW_USER");
+        console.log(state);
+        console.log(action);
+        return {
+          ...state,
+          following: state.following.filter(
+            (follow) => follow.username !== action.payload.recipient
+          )
         };
       default:
         return state;

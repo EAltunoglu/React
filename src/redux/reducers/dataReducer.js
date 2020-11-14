@@ -47,10 +47,10 @@ switch (action.type) {
             ...state
         };
     case DELETE_FAV:
-        index = state.favs.findIndex(
+        let index2 = state.favs.findIndex(
             (fav) => fav.favId === action.payload
         );
-        state.favs.splice(index, 1);
+        state.favs.splice(index2, 1);
         return {
             ...state
         };
@@ -60,18 +60,29 @@ switch (action.type) {
             favs: [action.payload, ...state.favs]
         };
     case SUBMIT_COMMENT:
+       /* console.log("ACTION");
+        console.log(action);
+        console.log("ACTION ENDED");
+        console.log("STATE DATA");
+        console.log(state);
+        console.log("STATE DATA ENDED");
+        */
+        let temp = state.favs.findIndex(
+            (fav) => fav.favId === action.payload.favId
+        );
+        /*console.log("INDEX");
+        console.log(temp);
+        console.log("INDEX");*/
+        state.favs[temp].commentCount = state.favs[temp].commentCount + 1;
+        //console.log(state.favs[temp].commentCount);
         return {
             ...state,
             fav: {
                 ...state.fav,
-                comments: [action.payload, ...state.fav.comments]
-            }
+                comments: [action.payload, ...state.fav.comments],
+                commentCount: state.fav.commentCount + 1
+            },
         };
-    /*case SEARCH_USERS:
-        return {
-            ...state,
-            users: action.payload
-        };*/
     default:
         return state;
 }
