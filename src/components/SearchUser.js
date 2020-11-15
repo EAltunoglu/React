@@ -39,8 +39,7 @@ export default class SearchUser extends React.Component {
 				} )
 			} )
 			.catch( error => {
-                //console.log("aaa");
-                console.log(error);
+                //console.log(error);
 				if ( axios.isCancel(error) || error ) {
 					this.setState({
 						loading: false,
@@ -62,21 +61,7 @@ export default class SearchUser extends React.Component {
 
 	renderSearchResults = () => {
 		const { results } = this.state;
-		/*
-		if ( results && Object.keys( results ).length && results.length ) {
-			return (
-				<ul className="results-container">
-					{ results.map( result => {
-						return (
-							<li>
-								{result.username}
-							</li>
-						)
-					} ) }
-
-				</ul>
-			)
-		}*/
+		
 			if( results && Object.keys( results ).length && results.length ) {
 				return(
 				<div> {

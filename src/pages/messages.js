@@ -8,22 +8,20 @@ import Profile from '../components/Profile';
 
 import { connect } from 'react-redux';
 
-class subscriptions extends Component {
+class messages extends Component {
     
     constructor(props){
         super(props);
         console.log(this.props);
         this.state = {
-            results: [],
+            messages: [],
             loadedNum: 0
         }
     }
 
     componentDidMount(){
-      const following = this.props.user.following;
-      following.forEach(element => {
         axios
-        .get(`/fav/sub/${element.username}`)
+        .get(`/fav/sub/${this.props.user.credentials.username}`)
         .then(res => {
             console.log("RES");
             console.log(res);
@@ -33,7 +31,6 @@ class subscriptions extends Component {
             console.log(err);
             console.log("CANT GET favs");
           })
-      });
     }
 
     renderResults = () => {
@@ -80,7 +77,7 @@ class subscriptions extends Component {
     }
 }
 
-subscriptions.propTypes = {
+messages.propTypes = {
   user: PropTypes.object.isRequired
 };
 
@@ -90,4 +87,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(subscriptions);
+)(messages);
