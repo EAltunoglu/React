@@ -9,23 +9,26 @@ import Notifications from './Notifications';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
 // Icons
 import HomeIcon from '@material-ui/icons/Home';
 import SearchUser from './SearchUser';
+import CreateList from './CreateList';
 
-const theme = {
-}
+import {changeTheme} from '../redux/actions/dataActions';
 
 class Navbar extends Component {
+
   render() {
-    const { authenticated } = this.props;
+    const { authenticated, isDarkMode } = this.props;
     return (
-      <AppBar color='secondary'>
+      <AppBar color='primary'>
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
-              <SearchUser></SearchUser>
+              <SearchUser/>
               <PostFav />
+              <CreateList/>
               <Link to="/home">
                 <MyButton tip="Home">
                   <HomeIcon />
@@ -35,6 +38,14 @@ class Navbar extends Component {
               <Link to="/subscriptions">
                 SUBSCRIPTIONS
               </Link>
+              <Link to="lists">
+                Lists
+              </Link>
+              <Switch
+                checked={isDarkMode}
+                onChange={this.props.changeTheme}
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
             </Fragment>
           ) : (
             <Fragment>
@@ -56,11 +67,14 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
+  isDarkMode: PropTypes.bool.isRequired,
+  changeTheme: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: state.user.authenticated
+  authenticated: state.user.authenticated,
+  isDarkMode: state.UI.isDarkMode
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, {changeTheme})(Navbar);

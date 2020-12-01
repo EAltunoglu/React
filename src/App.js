@@ -5,14 +5,15 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 // Redux
-import { Provider } from 'react-redux';
+//import { Provider } from 'react-redux';
 import store from './redux/store';
 import {SET_AUTHENTICATED} from './redux/types';
 import {logoutUser, getUserData} from './redux/actions/userActions';
 // import {} from './redux/'
-
+import { connect } from 'react-redux';
 // Components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
@@ -22,8 +23,10 @@ import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
 import subscriptions from './pages/subscriptions';
+import messages from './pages/messages';
+import lists from './pages/lists';
 
-const theme = createMuiTheme({
+const light = {
   palette:{
     primary: {
       light: '#33c9dc',
@@ -39,20 +42,35 @@ const theme = createMuiTheme({
     },
     typography: {
       useNextVariants: true
-    }
+    },
+    background: '#28b03f'
   },
-  navbar: {
-    color: 'red'
-  }
-});
+};
 
-axios.defaults.baseURL = "https://us-central1-favfay-ec70a.cloudfunctions.net/api";
-// axios.defaults.baseURL = "http://localhost:5000/favfay-ec70a/us-central1/api";
+const dark = {
+  palette:{
+    primary: {
+      light: '#101710',
+      main: '#101710',
+      dark: '#101710',
+      contrastText: '#fff'
+    },
+    secondary: {
+      light: '#101710',
+      main: '#101710',
+      dark: '#101710',
+      contrastText: '#aaa'
+    },
+    typography: {
+      useNextVariants: true
+    }
+  }
+};
 
 const token = localStorage.FavIdToken;
 if(token){
   const decodedToken = jwtDecode(token);
-  if(decodedToken.exp * 1000 < Date.now()){// Nanosec
+  if(decodedToken.exp * 1000 < Date.now()){// Fixin date
     store.dispatch(logoutUser())
     window.location.href = '/login';
   } else {
@@ -63,10 +81,12 @@ if(token){
 }
 
 class App extends Component {
+
   render(){
+    const appliedTheme = createMuiTheme(this.props.isDarkMode ? dark : light);
     return(
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
+      <MuiThemeProvider theme={appliedTheme}>
+
         <div className="App">
           <Router>
           <Navbar/>
@@ -86,14 +106,31 @@ class App extends Component {
                   path="/subscriptions"
                   component={subscriptions}
                 />
+                <Route
+                  exact
+                  path="/messages"
+                  component={messages}
+                />
+                <Route
+                  exact
+                  path="/lists"
+                  component={lists}
+                />
               </Switch>
             </div>
           </Router>
         </div>
-        </Provider>
       </MuiThemeProvider>
     )
   }
 }
 
-export default App;
+App.propTypes = {
+  isDarkMode: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  isDarkMode: state.UI.isDarkMode
+});
+
+export default connect(mapStateToProps)(App);

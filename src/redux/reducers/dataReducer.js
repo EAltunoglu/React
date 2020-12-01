@@ -7,12 +7,14 @@ import {
     POST_FAV,
     SET_FAV,
     SUBMIT_COMMENT,
+    SUBMIT_ITEM
 } from '../types';
 
 const initialState = {
-    users: [],
     favs: [],
     fav: {},
+    lists: [],
+    items: [],
     loading: false
 };
 
@@ -60,21 +62,10 @@ switch (action.type) {
             favs: [action.payload, ...state.favs]
         };
     case SUBMIT_COMMENT:
-       /* console.log("ACTION");
-        console.log(action);
-        console.log("ACTION ENDED");
-        console.log("STATE DATA");
-        console.log(state);
-        console.log("STATE DATA ENDED");
-        */
         let temp = state.favs.findIndex(
             (fav) => fav.favId === action.payload.favId
         );
-        /*console.log("INDEX");
-        console.log(temp);
-        console.log("INDEX");*/
         state.favs[temp].commentCount = state.favs[temp].commentCount + 1;
-        //console.log(state.favs[temp].commentCount);
         return {
             ...state,
             fav: {
@@ -83,6 +74,11 @@ switch (action.type) {
                 commentCount: state.fav.commentCount + 1
             },
         };
+    case SUBMIT_ITEM:
+        return {
+            ...state,
+            items: [action.payload, ...state.items]
+        }
     default:
         return state;
 }

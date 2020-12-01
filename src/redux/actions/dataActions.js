@@ -10,10 +10,14 @@ import {
     LOADING_UI,
     SET_FAV,
     STOP_LOADING_UI,
-    SUBMIT_COMMENT
+    SUBMIT_COMMENT,
+    CHANGE_THEME,
+    SUBMIT_ITEM
 } from '../types';
 import axios from 'axios';
-  
+
+axios.defaults.baseURL = "https://us-central1-favfay-ec70a.cloudfunctions.net/api"
+
 // Get all favs
 export const getFavs = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -88,7 +92,7 @@ export const unlikeFav = (favId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
-// Submit a fav
+
 export const submitComment = (favId, commentData) => (dispatch) => {
   axios
     .post(`/fav/${favId}/comment`, commentData)
@@ -106,6 +110,25 @@ export const submitComment = (favId, commentData) => (dispatch) => {
       });
     });
 };
+
+export const submitItem = (listId, itemData) => (dispatch) => {
+  axios
+    .post(`/lists/${listId}/add`, itemData)
+    .then((res) => {
+      dispatch({
+        type: SUBMIT_ITEM,
+        payload: res.data
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 export const deleteFav = (favId) => (dispatch) => {
   axios
     .delete(`/fav/${favId}`)
@@ -136,3 +159,7 @@ export const getUserData = (username) => (dispatch) => {
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
+
+export const changeTheme = () => (dispatch) => {
+  dispatch({ type: CHANGE_THEME });
+}

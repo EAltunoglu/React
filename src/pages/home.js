@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import Fav from '../components/Fav';
 import Profile from '../components/Profile';
 import FavSkeleton from '../util/FavSkeleton';
+import WhoToFollow from '../components/WhoToFollow';
 
 import { connect } from 'react-redux';
 import { getFavs } from '../redux/actions/dataActions';
+
 
 class home extends Component {
   componentDidMount() {
@@ -27,6 +29,7 @@ class home extends Component {
         </Grid>
         <Grid item sm={4} xs={12}>
           <Profile />
+          <WhoToFollow/>
         </Grid>
       </Grid>
     );

@@ -11,9 +11,6 @@ import { followUser, unfollowUser } from '../redux/actions/userActions';
 
 export class FollowButton extends Component {
   followed = () => {
-    console.log("FOLLOWED");
-    console.log(this.props.user);
-    console.log(this.props.username);
     if (
       this.props.user.following &&
       this.props.user.following.find(
@@ -30,11 +27,6 @@ export class FollowButton extends Component {
     this.props.unfollowUser(this.props.username);
   };
   render() {
-    console.log("FOLLOW BUTON:");
-    console.log("PROFILE USERNAME:");
-    console.log(this.props.username);
-    console.log("LOGGEDIN USER:");
-    console.log(this.props.user.credentials.username);
     const { authenticated } = this.props.user;
     const flag = this.followed();
     console.log(flag);

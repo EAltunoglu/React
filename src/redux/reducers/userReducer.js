@@ -63,10 +63,10 @@ import {
           ...state
         };
       case FOLLOW_USER:
-        console.log("STATE:");
+        /*console.log("STATE:");
         console.log(state);
         console.log("ACTION:");
-        console.log(action);
+        console.log(action);*/
         return {
           ...state,
           following: [
@@ -77,9 +77,10 @@ import {
           ]
         };
       case UNFOLLOW_USER:
+        /*
         console.log("UNFOLLOW_USER");
         console.log(state);
-        console.log(action);
+        console.log(action);*/
         return {
           ...state,
           following: state.following.filter(

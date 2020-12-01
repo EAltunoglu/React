@@ -11,6 +11,8 @@ import {
 } from '../types';
 import axios from 'axios';
 
+axios.defaults.baseURL = "https://us-central1-favfay-ec70a.cloudfunctions.net/api"
+
 export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios

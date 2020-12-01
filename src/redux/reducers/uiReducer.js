@@ -7,7 +7,7 @@ import {
   } from '../types';
   
   const initialState = {
-    isDarkMode: false,
+    isDarkMode: localStorage.getItem('FavTheme') === 'true' ? true : false,
     loading: false,
     errors: null
   };
@@ -37,6 +37,7 @@ import {
           loading: false
         };
       case CHANGE_THEME:
+        localStorage.setItem("FavTheme", !state.isDarkMode);
         return{
           ...state,
           isDarkMode: !state.isDarkMode

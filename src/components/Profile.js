@@ -21,18 +21,13 @@ import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import { connect } from 'react-redux';
 import { logoutUser, uploadImage } from '../redux/actions/userActions';
 
-const styles = {
+const styles = theme => ({
     paper: {
-        padding: 20
-    },
-    profile: {
-
+        padding: 20,
+        backgroundColor: theme.palette.background
     },
     form: {
         textAlign: 'center'
-    },
-    image: {
-        margin: '20px auto 20px auto',
     },
     pageTitle: {
         margin: '10px auto 10px auto',
@@ -52,7 +47,13 @@ const styles = {
     progress: {
         position: 'absolute',
     },
-}
+    profile_image: {
+      width: 200,
+      height: 200,
+      objectFit: 'cover',
+      maxWidth: '100%',
+    }
+});
 
 class Profile extends Component {
   handleImageChange = (event) => {
@@ -83,7 +84,7 @@ class Profile extends Component {
         <Paper className={classes.paper}>
           <div className={classes.profile}>
             <div className="image-wrapper">
-              <img src={imageUrl} alt="profile" className="profile-image" />
+              <img src={imageUrl} alt="profile" className={classes.profile_image} />
               <input
                 type="file"
                 id="imageInput"

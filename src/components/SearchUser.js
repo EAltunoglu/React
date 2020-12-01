@@ -2,6 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+
+const styles = {
+	
+}
 
 export default class SearchUser extends React.Component {
 
@@ -16,10 +23,17 @@ export default class SearchUser extends React.Component {
 
 		this.cancel = ''
 	}
-
+/*
+	handleOpen = (event) => {
+		this.setState({ anchorEl: event.target });
+	};
+	handleClose = () => {
+		this.setState({ anchorEl: null });
+	};
+*/
 	fetchSearchResults = ( query ) => {
-        console.log("query:");
-        console.log(query);
+        //console.log("query:");
+        //console.log(query);
 
 		if( this.cancel ) {
 			this.cancel.cancel();
@@ -27,7 +41,7 @@ export default class SearchUser extends React.Component {
 
 		this.cancel = axios.CancelToken.source();
 
-		axios.post('/search/user', {
+		axios.post('https://us-central1-favfay-ec70a.cloudfunctions.net/api/search/user', {
             cancelToken: this.cancel.token,
             username: query
 		})
@@ -67,7 +81,19 @@ export default class SearchUser extends React.Component {
 				<div> {
 				results.map( result => {
 					return(
-						<Button variant="h5" component={Link} to={`/users/${result.username}`}>
+						/*
+						<MenuItem key={result.username} onClick={this.handleClose}>
+							<Typography
+								component={Link}
+								color="default"
+								variant="body1"
+								to={`/users/${result.username}`}
+							>
+								{result.username}
+							</Typography>
+						</MenuItem>
+						*/
+						<Button component={Link} to={`/users/${result.username}`} >
 							{result.username}
 						</Button>
 					)
@@ -98,8 +124,17 @@ export default class SearchUser extends React.Component {
 
 						{/*	Loader*/}
 						
-						{/*	Result*/}
-						{ this.renderSearchResults() }
+						{/*
+						
+						<Menu
+							open={this.state.query !== ''}
+							onClose={this.handleClose}
+						>
+							{ this.renderSearchResults() }
+						</Menu>
+							Result*/}
+						
+						{this.renderSearchResults()}
 			</div>
 		)
 	}

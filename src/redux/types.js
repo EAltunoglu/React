@@ -21,3 +21,4 @@ export const UNLIKE_FAV = 'UNLIKE_FAV';
 export const DELETE_FAV = 'DELETE_FAV';
 export const POST_FAV = 'POST_FAV';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
+export const SUBMIT_ITEM = 'SUBMIT_ITEM';
