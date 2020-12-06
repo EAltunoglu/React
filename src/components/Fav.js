@@ -30,7 +30,7 @@ const styles = theme => ({
     //align: 'right',
     variant: "h6",
     marginTop: 5,
-    color: theme.palette.primary.light     
+    //color: theme.palette.primary.type
   },
   card: {
     position: 'relative',
@@ -45,9 +45,20 @@ const styles = theme => ({
     marginRight: 30,
     borderStyle: 'solid',
     borderColor: 'red',
+    backgroundColor: theme.palette.background,
     //flexDirection: 'column'
     //minWidth: '100%',
     //border-style: solid,
+  },
+  cardFilm: {
+    color: theme.palette.primary.type,
+    position: 'relative',
+    display: 'flex',
+    marginBottom: 20,
+    marginRight: 30,
+    borderStyle: 'solid',
+    borderColor: 'blue',
+    backgroundColor: theme.palette.background,
   },
   image: {
     minWidth: 128,
@@ -126,6 +137,48 @@ class Fav extends Component {
             <Typography
               variant="h6"
               color="primary"
+            >
+              {data.title}
+            </Typography>
+            {deleteButton}
+            <Typography variant="body2" color="textSecondary">
+              {dayjs(createdAt).fromNow()}
+            </Typography>
+            <Typography variant="body1">{body}</Typography>
+            
+          </CardContent>
+          <CardActions className={classes.actionsFooter}>
+            <LikeButton favId={favId} />
+            <span>{likeCount} Likes</span>
+            <MyButton tip="comments">
+              <ChatIcon color="primary" />
+            </MyButton>
+            <span>{commentCount} comments</span>
+            <FavDialog
+              favId={favId}
+              username={username}
+              openDialog={this.props.openDialog}
+            />
+          </CardActions>
+        </Card>
+        )
+      }
+      if(type !== undefined && type === 2){
+        return(
+          <Card className={classes.cardFilm}
+          >
+          <CardMedia
+            image={data.imageUrl}
+            title="Profile image"
+            className={classes.image}
+          />
+          <CardContent className={classes.content}>
+          <Typography
+              className={classes.author}
+            >
+              {data.release}
+            </Typography>
+            <Typography
             >
               {data.title}
             </Typography>

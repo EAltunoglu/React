@@ -32,39 +32,42 @@ const light = {
       light: '#33c9dc',
       main: '#11bcd4',
       dark: '#008394',
-      contrastText: '#fff'
+      contrastText: '#111',
+      type: '#000'
     },
     secondary: {
       light: '#ff6333',
       main: '#ff3d00',
       dark: '#b22a00',
-      contrastText: '#fff'
+      contrastText: '#111'
     },
     typography: {
       useNextVariants: true
     },
-    background: '#28b03f'
+    background: '#fff'
   },
 };
 
 const dark = {
   palette:{
     primary: {
-      light: '#101710',
-      main: '#101710',
+      light: '#33c9dc',
+      main: '#11bcd4',
       dark: '#101710',
-      contrastText: '#fff'
+      contrastText: '#fff',
+      type: '#fff'
     },
     secondary: {
       light: '#101710',
       main: '#101710',
       dark: '#101710',
-      contrastText: '#aaa'
+      contrastText: '#fff',
     },
     typography: {
       useNextVariants: true
-    }
-  }
+    },
+    background: '#000'
+  },
 };
 
 const token = localStorage.FavIdToken;

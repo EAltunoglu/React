@@ -54,9 +54,6 @@ class PostFav extends Component {
 
   fetchSearchResults = (query) => {
     const { selected } = this.state;
-    console.log("FETCH RESULTS");
-    console.log(selected);
-    console.log(query);
 
     var instance = axios.create();
     delete instance.defaults.headers.common["Authorization"];
@@ -87,12 +84,15 @@ class PostFav extends Component {
         });
     } else if (selected === "2") {
       const SearchUrl = `https://api.themoviedb.org/3/search/movie?api_key=6f4f38852998869540a47e5ce5550a6b&query=${query}`;
+      console.log("HEYYT");
       instance.get(SearchUrl)
           .then(res => {
               console.log(res);
               console.log("ASDDSAASD");
               console.log(res.data);
-
+              this.setState({
+                results: res.data.results
+              })
           })
           .catch(error => {
               console.log(error);
@@ -129,7 +129,7 @@ class PostFav extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.postFav({ body: this.state.body, data: this.state.data, star: this.state.star });
+    this.props.postFav({ body: this.state.body, data: this.state.data, star: this.state.star, type: parseInt(this.state.selected) });
   };
 
   handleOnInputChange = (event) => {
@@ -172,6 +172,27 @@ class PostFav extends Component {
                             value={data}
                             onClick={this.handleSetData}>
                                 {result.volumeInfo.title}
+                            </Button>
+                        )
+                    })}
+                </div>
+                )
+            }
+            else if(selected === "2"){
+              return(
+                <div> {
+                    results.map( result => {
+                        var data = {
+                            title: result.original_title,
+                            release: result.release_date,
+                            imageUrl: "https://image.tmdb.org/t/p/original" + result.poster_path 
+                        }
+                        data = JSON.stringify(data);
+                        return(
+                            <Button
+                            value={data}
+                            onClick={this.handleSetData}>
+                                {result.original_title}
                             </Button>
                         )
                     })}

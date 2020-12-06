@@ -14,19 +14,30 @@ import Switch from '@material-ui/core/Switch';
 import HomeIcon from '@material-ui/icons/Home';
 import SearchUser from './SearchUser';
 import CreateList from './CreateList';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import {changeTheme} from '../redux/actions/dataActions';
+
+const styles = theme => ({
+    searchh: {
+      position: 'fixed',
+      top: '2%',
+      right: '1%',
+      //marginTop: 5,
+      objectFit: 'cover',
+      align: 'center'
+    }
+});
 
 class Navbar extends Component {
 
   render() {
-    const { authenticated, isDarkMode } = this.props;
+    const { authenticated, isDarkMode, classes } = this.props;
     return (
       <AppBar color='primary'>
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
-              <SearchUser/>
               <PostFav />
               <CreateList/>
               <Link to="/home">
@@ -46,6 +57,9 @@ class Navbar extends Component {
                 onChange={this.props.changeTheme}
                 inputProps={{ 'aria-label': 'secondary checkbox' }}
               />
+              <div className={classes.search}>
+                <SearchUser/>
+              </div>
             </Fragment>
           ) : (
             <Fragment>
@@ -77,4 +91,4 @@ const mapStateToProps = (state) => ({
   isDarkMode: state.UI.isDarkMode
 });
 
-export default connect(mapStateToProps, {changeTheme})(Navbar);
+export default connect(mapStateToProps, {changeTheme})(withStyles(styles)(Navbar));

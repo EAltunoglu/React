@@ -5,12 +5,22 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-const styles = {
-	
-}
+const styles = theme => ({
+    search: {
+      position: 'fixed',
+      //left: '85%',
+	  right: '1%',
+	  top: '1.3%',
+	  marginTop: 5,
+	},
+	results: {
+		backgroundColor: 'red',
+	}
+});
 
-export default class SearchUser extends React.Component {
+class SearchUser extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -75,10 +85,10 @@ export default class SearchUser extends React.Component {
 
 	renderSearchResults = () => {
 		const { results } = this.state;
-		
+		const { classes } = this.props;
 			if( results && Object.keys( results ).length && results.length ) {
 				return(
-				<div> {
+				<ul className={classes.results}> {
 				results.map( result => {
 					return(
 						/*
@@ -93,21 +103,24 @@ export default class SearchUser extends React.Component {
 							</Typography>
 						</MenuItem>
 						*/
-						<Button component={Link} to={`/users/${result.username}`} >
-							{result.username}
-						</Button>
+						<li>
+							<Button component={Link} to={`/users/${result.username}`} >
+								{result.username}
+							</Button>
+						</li>
 					)
 				})}
-				</div>
+				</ul>
 				)
 		}
 	};
 
 	render() {
 		const { query, loading, message } = this.state;
+		const { classes } = this.props;
 		return (
-			<div className="container">
-                <label className="search-label" htmlFor="search-input">
+			<div className={classes.search}>
+                <label>
                     <input
                         type="text"
                         name="query"
@@ -139,3 +152,5 @@ export default class SearchUser extends React.Component {
 		)
 	}
 }
+
+export default withStyles(styles)(SearchUser);

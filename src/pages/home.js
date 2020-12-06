@@ -6,10 +6,16 @@ import Fav from '../components/Fav';
 import Profile from '../components/Profile';
 import FavSkeleton from '../util/FavSkeleton';
 import WhoToFollow from '../components/WhoToFollow';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
 import { getFavs } from '../redux/actions/dataActions';
 
+const styles = theme => ({
+  color: {
+    backgroundColor: theme.palette.background
+  }
+});
 
 class home extends Component {
   componentDidMount() {
@@ -17,13 +23,14 @@ class home extends Component {
   }
   render() {
     const { favs, loading } = this.props.data;
+    const { classes } = this.props;
     let recentFavsMarkup = !loading ? (
       favs.map((fav) => <Fav key={fav.favId} fav={fav} />)
     ) : (
       <FavSkeleton />
     );
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={16} className={classes.color}>
         <Grid item sm={8} xs={12}>
           {recentFavsMarkup}
         </Grid>
@@ -48,4 +55,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   { getFavs }
-)(home);
+)(withStyles(styles)(home));

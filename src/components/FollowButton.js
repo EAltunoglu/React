@@ -29,7 +29,7 @@ export class FollowButton extends Component {
   render() {
     const { authenticated } = this.props.user;
     const flag = this.followed();
-    console.log(flag);
+    //console.log(flag);
     const followButton = !authenticated ? (
       <Link to="/login">
         <MyButton tip="Follow">
