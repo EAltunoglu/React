@@ -10,6 +10,12 @@ import { connect } from 'react-redux';
 import { likeFav, unlikeFav } from '../redux/actions/dataActions';
 
 export class LikeButton extends Component {
+  constructor(){
+    super();
+    this.state = {
+      authenticated: null
+    }
+  }
   likedFav = () => {
     if (
       this.props.user.likes &&
@@ -26,24 +32,49 @@ export class LikeButton extends Component {
   unlikeFav = () => {
     this.props.unlikeFav(this.props.favId);
   };
+
+  componentDidMount(){
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("EHEHEHEH");
+    console.log(nextProps);
+    if (nextProps.user) {
+        this.setState({ authenticated: nextProps.user.authenticated });
+    }
+  }
+
   render() {
-    const { authenticated } = this.props.user;
-    const likeButton = !authenticated ? (
-      <Link to="/login">
-        <MyButton tip="Like">
+    console.log("RENDER");
+    console.log(this.props);
+
+    if(this.props.user !== undefined){
+      const { authenticated } = this.props.user;
+      const likeButton = !authenticated ? (
+        <Link to="/login">
+          <MyButton tip="Like">
+            <FavoriteBorder color="primary" />
+          </MyButton>
+        </Link>
+      ) : this.likedFav() ? (
+        <MyButton tip="Undo like" onClick={this.unlikeFav}>
+          <FavoriteIcon color="primary" />
+        </MyButton>
+      ) : (
+        <MyButton tip="Like" onClick={this.likeFav}>
           <FavoriteBorder color="primary" />
         </MyButton>
-      </Link>
-    ) : this.likedFav() ? (
-      <MyButton tip="Undo like" onClick={this.unlikeFav}>
-        <FavoriteIcon color="primary" />
-      </MyButton>
-    ) : (
-      <MyButton tip="Like" onClick={this.likeFav}>
-        <FavoriteBorder color="primary" />
-      </MyButton>
-    );
-    return likeButton;
+      );
+      return likeButton;
+    } else {
+      return(
+        <MyButton tip="Like">
+          <FavoriteBorder color="primary" />
+          
+        </MyButton>
+      )
+    }
   }
 }
 

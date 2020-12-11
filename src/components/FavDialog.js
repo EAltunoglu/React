@@ -23,9 +23,17 @@ import { getFav, clearErrors } from '../redux/actions/dataActions';
 
 const styles = ({
   profileImage: {
+    position: 'absolute',
     maxWidth: 200,
     height: 200,
     borderRadius: '50%',
+    objectFit: 'cover',
+    left: '50%',
+    top: '0%',
+  },
+  contentImage: {
+    maxWidth: 128,
+    height: 200,
     objectFit: 'cover'
   },
   dialogContent: {
@@ -87,11 +95,12 @@ class FavDialog extends Component {
         commentCount,
         userImage,
         username,
-        comments
+        comments,
+        data
       },
       UI: { loading }
     } = this.props;
-
+    const {open} = this.state;
     const dialogMarkup = loading ? (
       <div className={classes.spinnerDiv}>
         <CircularProgress size={200} thickness={2} />
@@ -100,6 +109,9 @@ class FavDialog extends Component {
       <Grid container spacing={16}>
         <Grid item sm={5}>
           <img src={userImage} alt="Profile" className={classes.profileImage} />
+          {open && 
+            <img src={data.imageUrl} alt="Content" className={classes.contentImage} />
+          }
         </Grid>
         <Grid item sm={7}>
           <Typography

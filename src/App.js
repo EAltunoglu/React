@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
@@ -89,8 +89,8 @@ class App extends Component {
     const appliedTheme = createMuiTheme(this.props.isDarkMode ? dark : light);
     return(
       <MuiThemeProvider theme={appliedTheme}>
-
-        <div className="App">
+        <Fragment backgroundColor={appliedTheme.palette.background}>
+        <div className="App" color='red'>
           <Router>
           <Navbar/>
             <div className="container"> 
@@ -123,6 +123,7 @@ class App extends Component {
             </div>
           </Router>
         </div>
+        </Fragment>
       </MuiThemeProvider>
     )
   }

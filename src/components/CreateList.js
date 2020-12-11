@@ -38,6 +38,7 @@ class CreateList extends Component {
     this.state = {
       open: false,
       body: "",
+      title: "",
       errors: {},
     };
     this.cancel = "";
@@ -50,7 +51,7 @@ class CreateList extends Component {
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
-      this.setState({ body: "", open: false, errors: {} });
+      this.setState({ body: "", title:"", open: false, errors: {} });
     }
   }
 
@@ -71,13 +72,22 @@ class CreateList extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   
+  resetStates = () =>{
+    this.setState({
+      title: "",
+      open: false,
+      body: "",
+      errors: {},
+    });
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     const PostUrl = "https://us-central1-favfay-ec70a.cloudfunctions.net/api/lists";
     axios.post(PostUrl, {
       public: true,
       body: this.state.body,
-      title: "MY TITLE"
+      title: this.state.title
     })
     .then(res => {
       console.log("LIST CREATED");
@@ -87,6 +97,7 @@ class CreateList extends Component {
       console.log(err);
       console.log("CREATE LIST ERROR");
     })
+    this.resetStates();
   };
 
   render() {
@@ -116,10 +127,21 @@ class CreateList extends Component {
           <DialogTitle>Create a new list</DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
+            <TextField
+                name="title"
+                type="text"
+                label="Title of List!!"
+                placeholder="Fav film book etc"
+                error={errors.title ? true : false}
+                helperText={errors.title}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
               <TextField
                 name="body"
                 type="text"
-                label="Title of List!!"
+                label="Body of List!!"
                 placeholder="Fav film book etc"
                 error={errors.body ? true : false}
                 helperText={errors.body}

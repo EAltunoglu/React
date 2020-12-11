@@ -17,8 +17,13 @@ import { connect } from "react-redux";
 import { postFav, clearErrors } from "../redux/actions/dataActions";
 import axios from "axios";
 import { SentimentVerySatisfiedOutlined } from "@material-ui/icons";
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
 
-const styles = {
+const styles = theme => ({
   submitButton: {
     position: "relative",
     float: "right",
@@ -32,7 +37,41 @@ const styles = {
     left: "91%",
     top: "6%",
   },
-};
+  image: {
+    minWidth: 128,
+    minHeight: 200,
+  },
+  cardBook: {
+    position: 'relative',
+    display: 'flex',
+    borderStyle: 'solid',
+    borderColor: 'red',
+    backgroundColor: theme.palette.background,
+  },
+  author: {
+    position: 'absolute',
+    right: '1%',
+    variant: "h6",
+    marginTop: 5,
+  },
+  actionsFooter: {
+    position: 'absolute',
+    display: 'block',
+    bottom: '1%',
+    right: '3%',
+    float: 'right',
+  },
+  cardFilm: {
+    color: theme.palette.primary.type,
+    position: 'relative',
+    display: 'flex',
+    marginBottom: 20,
+    marginRight: 30,
+    borderStyle: 'solid',
+    borderColor: 'blue',
+    backgroundColor: theme.palette.background,
+  },
+});
 
 class PostFav extends Component {
 
@@ -43,7 +82,7 @@ class PostFav extends Component {
       selected: "0",
       star: 1,
       query: "",
-      data: {},
+      data: null,
       results: {},
       open: false,
       body: "",
@@ -122,14 +161,30 @@ class PostFav extends Component {
   };
   handleClose = () => {
     this.props.clearErrors();
-    this.setState({ open: false, errors: {} });
+    //this.setState({ open: false, errors: {} });
+    this.resetStates();
   };
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  resetStates = () =>{
+    this.setState({
+      selected: "0",
+      star: 1,
+      query: "",
+      data: null,
+      results: {},
+      open: false,
+      body: "",
+      errors: {},
+    });
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.postFav({ body: this.state.body, data: this.state.data, star: this.state.star, type: parseInt(this.state.selected) });
+    this.resetStates();
   };
 
   handleOnInputChange = (event) => {
@@ -158,7 +213,7 @@ class PostFav extends Component {
         if( results && Object.keys( results ).length && results.length ) {
             if(selected === "1"){
                 return(
-                <div> {
+                <ul> {
                     results.map( result => {
                         var data = {
                             title: result.volumeInfo.title,
@@ -168,19 +223,21 @@ class PostFav extends Component {
                         }
                         data = JSON.stringify(data);
                         return(
-                            <Button
-                            value={data}
-                            onClick={this.handleSetData}>
-                                {result.volumeInfo.title}
-                            </Button>
+                            <li key={data.imageUrl}>
+                              <Button
+                              value={data}
+                              onClick={this.handleSetData}>
+                                  {result.volumeInfo.title}
+                              </Button>
+                            </li>
                         )
                     })}
-                </div>
+                </ul>
                 )
             }
             else if(selected === "2"){
               return(
-                <div> {
+                <ul> {
                     results.map( result => {
                         var data = {
                             title: result.original_title,
@@ -189,25 +246,199 @@ class PostFav extends Component {
                         }
                         data = JSON.stringify(data);
                         return(
+                          <li>
                             <Button
                             value={data}
                             onClick={this.handleSetData}>
                                 {result.original_title}
                             </Button>
+                          </li>
                         )
                     })}
-                </div>
+                </ul>
                 )
             }
 		}
 	};
 
-  render() {
-    const { errors, query, star } = this.state;
+  renderData = () => {
+    const {errors, selected, data, star} = this.state;
     const {
       classes,
       UI: { loading },
     } = this.props;
+    if(selected === "1"){
+      return(
+        <Card className={classes.cardBook}>
+          <CardMedia
+            image={data.imageUrl}
+            title="Book image"
+            className={classes.image}
+          />
+          <CardContent className={classes.content}>
+          <Typography
+              className={classes.author}
+            >
+              {data.author}
+            </Typography>
+            <Typography
+              variant="h6"
+              color="primary"
+            >
+              {data.title}
+            </Typography>
+            <TextField
+                name="body"
+                type="text"
+                label="Fav!!"
+                multiline
+                rows="3"
+                placeholder="Fav book"
+                error={errors.body ? true : false}
+                helperText={errors.body}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              <Rating
+            name="simple-controlled"
+            value={star}
+            onChange={(event, newValue) => {
+              this.setState({star: newValue});
+            }}
+          />
+          </CardContent>
+            <CardActions>  
+              <form onSubmit={this.handleSubmit}>
+              <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submitButton}
+                  disabled={loading}
+                >
+                  Submit
+                  {loading && (
+                    <CircularProgress
+                      size={30}
+                      className={classes.progressSpinner}
+                    />
+                  )}
+                </Button>
+                </form>
+              </CardActions>
+        </Card>
+      )
+    } else if(selected === "2"){
+      return(
+        <Card className={classes.cardFilm}>
+          <CardMedia
+            image={data.imageUrl}
+            title="Book image"
+            className={classes.image}
+          />
+          <CardContent className={classes.content}>
+          <Typography
+              className={classes.author}
+            >
+              {data.author}
+            </Typography>
+            <Typography
+              variant="h6"
+              color="primary"
+            >
+              {data.title}
+            </Typography>
+            <TextField
+                name="body"
+                type="text"
+                label="Fav!!"
+                multiline
+                rows="3"
+                placeholder="Fav film"
+                error={errors.body ? true : false}
+                helperText={errors.body}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              <Rating
+            name="simple-controlled"
+            value={star}
+            onChange={(event, newValue) => {
+              this.setState({star: newValue});
+            }}
+          />
+          </CardContent>
+            <CardActions>  
+              <form onSubmit={this.handleSubmit}>
+              <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submitButton}
+                  disabled={loading}
+                >
+                  Submit
+                  {loading && (
+                    <CircularProgress
+                      size={30}
+                      className={classes.progressSpinner}
+                    />
+                  )}
+                </Button>
+                </form>
+              </CardActions>
+        </Card>
+      )
+    }
+  }
+
+  render() {
+    const { errors, query, star, selected, data } = this.state;
+    const {
+      classes,
+      UI: { loading },
+    } = this.props;
+    if(data !== null){
+      return(
+        <Fragment>
+          <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          fullWidth
+          maxWidth="sm"
+          >
+          {this.renderData()}
+          </Dialog>
+        </Fragment>
+      )
+    }
+    if(selected !== "0"){
+      return(
+        <Fragment>
+          <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          fullWidth
+          maxWidth="sm"
+        >
+          <label className="search-label" htmlFor="search-input">
+            <input
+              type="text"
+              name="query"
+              value={query}
+              id="search-input"
+              placeholder="Search Content"
+              onChange={this.handleOnInputChange}
+            />
+          </label>
+            {this.renderSearchResults()}
+          </Dialog>
+        </Fragment>
+      )
+    }
+
     return (
       <Fragment>
         <MyButton onClick={this.handleOpen} tip="Post a Fav!">
@@ -219,14 +450,6 @@ class PostFav extends Component {
           fullWidth
           maxWidth="sm"
         >
-        <Rating
-          name="simple-controlled"
-          value={star}
-          onChange={(event, newValue) => {
-            this.setState({star: newValue});
-          }}
-        />
-
           <MyButton
             tip="Close"
             onClick={this.handleClose}
@@ -236,20 +459,7 @@ class PostFav extends Component {
           </MyButton>
           <DialogTitle>Post a new fav</DialogTitle>
           <DialogContent>
-            <form onSubmit={this.handleSubmit}>
-              <TextField
-                name="body"
-                type="text"
-                label="Fav!!"
-                multiline
-                rows="3"
-                placeholder="Fav film book etc"
-                error={errors.body ? true : false}
-                helperText={errors.body}
-                className={classes.textField}
-                onChange={this.handleChange}
-                fullWidth
-              />
+            
               <Button
                 tip="Add a Book to list"
                 value="1"
@@ -271,35 +481,7 @@ class PostFav extends Component {
               >
                 Add a Music
               </Button>
-              {this.state.selected !== 0 && (
-                <label className="search-label" htmlFor="search-input">
-                  <input
-                    type="text"
-                    name="query"
-                    value={query}
-                    id="search-input"
-                    placeholder="Search Content"
-                    onChange={this.handleOnInputChange}
-                  />
-                </label>
-              )}
-              {this.renderSearchResults()}
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submitButton}
-                disabled={loading}
-              >
-                Submit
-                {loading && (
-                  <CircularProgress
-                    size={30}
-                    className={classes.progressSpinner}
-                  />
-                )}
-              </Button>
-            </form>
+              
           </DialogContent>
         </Dialog>
       </Fragment>

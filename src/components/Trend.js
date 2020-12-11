@@ -1,21 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import FollowButon from './FollowButton';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { LikeButton } from './LikeButton';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const styles = ({
-    userImage: {
+    favImage: {
       maxWidth: '100%',
       height: 30,
       objectFit: 'cover',
-      borderRadius: '50%'
     }
   });
 
-export class WhoToFollow extends Component {
+export class Trend extends Component {
     
     constructor(props){
         super(props);
@@ -25,7 +26,7 @@ export class WhoToFollow extends Component {
     }
 
     componentDidMount(){
-        axios.get("https://us-central1-favfay-ec70a.cloudfunctions.net/api/whotofollow")
+        axios.get("https://us-central1-favfay-ec70a.cloudfunctions.net/api/trends")
         .then(res => {
             this.setState({results: res.data});
         })
@@ -41,25 +42,26 @@ export class WhoToFollow extends Component {
         return (
             <Paper>
                 <Typography>
-                    Who To Follow
+                    Trending
                 </Typography>
             {results.map(result => {
                 return(
                     <div>
                         <img
-                        src={result.imageUrl}
-                        alt="comment"
-                        className={classes.userImage}
+                        src={result.data.imageUrl}
+                        alt="image"
+                        className={classes.favImage}
                         />
                         <Typography
-                            variant="h5"
-                            component={Link}
-                            to={`/users/${result.username}`}
+                            variant="h6"
                             color="primary"
+                            component={Link}
+                            to={`/users/${result.username}/fav/${result.favId}`}
                         >
-                            {result.username}
+                            {result.data.title}
                         </Typography>
-                        <FollowButon username={result.username}/>
+                        
+                        <LikeButton favId={result.favId}/>
                     </div>
                 )
             })
@@ -69,4 +71,12 @@ export class WhoToFollow extends Component {
     }
 }
 
-export default withStyles(styles)(WhoToFollow)
+Trend.propTypes = {
+    user: PropTypes.object.isRequired,
+};
+  
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, {})(withStyles(styles)(Trend))

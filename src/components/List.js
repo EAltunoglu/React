@@ -17,20 +17,26 @@ import ChatIcon from '@material-ui/icons/Chat';
 // Redux
 import { connect } from 'react-redux';
 
-const styles = {
+const styles = theme => ({
   card: {
     position: 'relative',
     display: 'flex',
-    marginBottom: 20
+    marginBottom: 20,
+    marginRight: 30,
+    backgroundColor: theme.palette.background,
+    //flexDirection: 'column'
+    //minWidth: '100%',
+    //border-style: solid,
   },
   image: {
-    minWidth: 200
+    minWidth: 128,
+    minHeight: 200,
   },
   content: {
     padding: 25,
     objectFit: 'cover'
   }
-};
+});
 
 class List extends Component {
   render() {
@@ -75,11 +81,17 @@ class List extends Component {
           >
             {username}
           </Typography>
+          <Typography
+            variant="h6"
+            color="secondary"
+          >
+            {title}
+          </Typography>
           {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
-          <Typography variant="body1">{title}</Typography>
+          <Typography variant="body1">{body}</Typography>
           <ListDialog
             list={this.props.list}
             username={username}

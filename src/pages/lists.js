@@ -19,13 +19,10 @@ class lists extends Component {
   }
   componentDidMount() {
     const username = this.props.user.credentials.username;
-    console.log("AAA");
-    console.log(username);
+
     axios
       .get(`https://us-central1-favfay-ec70a.cloudfunctions.net/api/lists/${username}`)
       .then((res) => {
-        console.log("DATA");
-        console.log(res.data);
         this.setState({lists: res.data, loading: false});
       })
       .catch(err => {
@@ -34,16 +31,14 @@ class lists extends Component {
   }
   render() {
     const { lists, loading } = this.state;
-    console.log("RENDER");
-    console.log(lists);
-    console.log(loading);
+
     let listsMarkup = !loading ? (
       lists.map((list) => <List key={list.listId} list={list}/>)
       
 
     ) : (
       <div>
-          BACCIN
+          HELLO
       </div>
     );
     

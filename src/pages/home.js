@@ -6,6 +6,7 @@ import Fav from '../components/Fav';
 import Profile from '../components/Profile';
 import FavSkeleton from '../util/FavSkeleton';
 import WhoToFollow from '../components/WhoToFollow';
+import Trend from '../components/Trend';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { connect } from 'react-redux';
@@ -37,6 +38,7 @@ class home extends Component {
         <Grid item sm={4} xs={12}>
           <Profile />
           <WhoToFollow/>
+          <Trend/>
         </Grid>
       </Grid>
     );

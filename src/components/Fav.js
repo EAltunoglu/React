@@ -12,11 +12,13 @@ import LikeButton from './LikeButton';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
+import Rating from '@material-ui/lab/Rating';
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux
-import CardActions from '@material-ui/core/CardActions';
+
 import { connect } from 'react-redux';
 import { Height } from '@material-ui/icons';
 import { CardHeader } from '@material-ui/core';
@@ -104,16 +106,13 @@ class Fav extends Component {
         likeCount,
         commentCount,
         type,
-        data
+        data,
+        star
       },
       user: {
         authenticated,
       }
     } = this.props;
-    /// HANDDLE
-    //console.log(this.props);
-    //console.log(credentials);
-    //console.log()
     const deleteButton =
       authenticated && username === this.props.user.credentials.username ? (
         null
@@ -125,10 +124,11 @@ class Fav extends Component {
           >
           <CardMedia
             image={data.imageUrl}
-            title="Profile image"
+            title="Book image"
             className={classes.image}
           />
           <CardContent className={classes.content}>
+          <Rating name="read-only" value={star} readOnly />
           <Typography
               className={classes.author}
             >
@@ -169,10 +169,11 @@ class Fav extends Component {
           >
           <CardMedia
             image={data.imageUrl}
-            title="Profile image"
+            title="Film image"
             className={classes.image}
           />
           <CardContent className={classes.content}>
+          <Rating name="read-only" value={star} readOnly />
           <Typography
               className={classes.author}
             >
